@@ -6,6 +6,6 @@
 
 bool makeMove();//执行走法
 
-void unMakeMove();//撤销走法
+bool unMakeMove();//撤销走法
 
 #endif

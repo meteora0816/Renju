@@ -1,4 +1,4 @@
-#include "define.h"
+#include "evaluate.h"
 
 int evaluate()//估值算法，返回估值
 {

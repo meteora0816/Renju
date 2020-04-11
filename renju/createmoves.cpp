@@ -1,4 +1,4 @@
-#include "define.h"
+#include "createmoves.h"
 
 int createMoves() //生成全部合法走法集
 {

@@ -1,4 +1,3 @@
-
 #ifndef _DEFINE_
 #define _DEFINE_
 //全局变量定义
@@ -20,7 +19,9 @@ using namespace std;
 
 #define GRID_NUM 16	//棋盘规模	
 extern int chessBoard[GRID_NUM][GRID_NUM]; //棋盘
-bool gameover(struct point node, int player); //判断是否游戏结束
+extern int player;
+
+bool gameover(); //判断是否游戏结束
 #endif
 
 
