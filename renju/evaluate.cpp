@@ -1,6 +1,7 @@
 #include "evaluate.h"
 using namespace std;
 
+int posValue[GRID_NUM][GRID_NUM];
 // 匹配字符串，用来判断棋型
 string pattern[39] = {
 	"aaaaa",///0:连五
