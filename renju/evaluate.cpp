@@ -16,21 +16,16 @@ string pattern[39] = {
 	"aaooo","oooaa","baoaoo","ooaoab","oaooab","baooao","aoooa","boaoaob","boaaoob","booaaob"///29~38眠二
 };
 //根据不同的场景进行给分
-
 int scores[13] = { 1000000,100000,50000,10000,5000,4000,1000,900,500,100,90,50,20 };
+
+int VALUE_BLACK = 0;
+int VALUE_WHITE = 0;
 
 void initPosValue()//初始化棋盘估值，在游戏开始时需要调用一次
 {
 	for (int i = 1; i < GRID_NUM; i++)
 		for (int j = 1; j < GRID_NUM; j++)
 			posValue[i][j] = min(min(i - 0, GRID_NUM - 1 - i), min(j - 0, GRID_NUM - 1 - j));
-}
-
-int evaluate(int x, int y, int player)//估值算法，返回估值，x,y为点坐标，player为黑白子即black，white
-{
-	int result = 0;
-	result = getValue(x, y, black) + getValue(x, y, white);//考虑对自己的利益与减少敌人利益
-	return  result;
 }
 
 int getValue(int x, int y, int player)
@@ -147,6 +142,13 @@ int getValue(int x, int y, int player)
 	else if (patternCnt[9] > 0)
 		value += scores[12];
 	return value;
+}
+
+int evaluate(int x, int y)//估值算法，返回估值，x,y为点坐标，player为黑白子即black，white
+{
+	int result = 0;
+	result = getValue(x, y, black) + getValue(x, y, white);//考虑对自己的利益与减少敌人利益
+	return result;
 }
 
 
