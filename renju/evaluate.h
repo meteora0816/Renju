@@ -4,7 +4,7 @@
 #include<string>
 #include "define.h"
 
-int posValue[GRID_NUM][GRID_NUM];
+extern int posValue[GRID_NUM][GRID_NUM];
 
 void initPosValue();//初始化棋盘估值，在游戏开始时需要调用一次
 
