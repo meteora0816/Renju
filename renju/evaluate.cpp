@@ -144,10 +144,10 @@ int getValue(int x, int y, int player)
 	return value;
 }
 
-int evaluate(int x, int y)//估值算法，返回估值，x,y为点坐标，player为黑白子即black，white
+int evaluate(int x, int y, int color)//估值算法，返回估值，x,y为点坐标，player为黑白子即black，white
 {
 	int result = 0;
-	result = getValue(x, y, black) + getValue(x, y, white);//考虑对自己的利益与减少敌人利益
+	result = getValue(x, y, color) * 1.0 + getValue(x, y, color ^ 3);//考虑对自己的利益与减少敌人利益
 	return result;
 }
 

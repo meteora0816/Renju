@@ -8,7 +8,7 @@ bool makeMove(int x, int y, int color)
 	chessBoard[x][y] = color;
 	piecesCount++;
 	printf("%d %d %d\n", x, y, color);
-	int delta = evaluate(x, y);
+	int delta = evaluate(x, y, color);
 	if (color==black) VALUE_BLACK += delta;
 	else VALUE_WHITE += delta;
 	if (gameover(x,y,color)) return true;

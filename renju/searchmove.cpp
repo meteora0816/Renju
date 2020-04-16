@@ -17,7 +17,7 @@ bool tooFar(int x, int y)
 int x, y;
 int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta) 
 {
-	if (dep > 3) {
+	if (dep > 2) {
 		return val_ai-val_player;
 	}
 	if (dep % 2) {
@@ -27,7 +27,7 @@ int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta)
 				if (chessBoard[i][j] != 0) continue;
 				if (piecesCount!=0&&tooFar(i, j)) continue;
 				chessBoard[i][j] = color;
-				int eva = dfs(color, dep + 1, val_ai + evaluate(i, j), val_player, alpha, beta);
+				int eva = dfs(color ^ 3, dep + 1, val_ai + evaluate(i, j, color), val_player, alpha, beta);
 				chessBoard[i][j] = 0;
 				//if (dep == 1) printf("%d %d %d\n", i, j, eva);
 				if (eva > MAX) {
@@ -53,7 +53,7 @@ int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta)
 			for (int j = 1; j < 16; j++) {
 				if (chessBoard[i][j] != 0) continue;
 				chessBoard[i][j] = color;
-				int eva = dfs(color, dep + 1, val_ai, val_player + evaluate(i, j), alpha, beta);
+				int eva = dfs(color ^ 3, dep + 1, val_ai, val_player + evaluate(i, j, color), alpha, beta);
 				chessBoard[i][j] = 0;
 				if (eva < MIN) {
 					MIN = eva;
