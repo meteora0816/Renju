@@ -17,7 +17,7 @@ bool tooFar(int x, int y)
 int x, y;
 int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta) 
 {
-	if (dep > 3) {
+	if (dep > 2) {
 		return val_ai-val_player;
 	}
 	if (dep % 2) {

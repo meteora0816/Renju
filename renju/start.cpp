@@ -29,7 +29,7 @@ int main()
 		else if (input == "move") {
 			int x, y;
 			cin >> x >> y;
-			if (inboard(x, y)) {
+			if (inboard(x, y)&&chessBoard[x][y]==0) {
 				bool gameOver = makeMove(x, y, player);
 				if (gameOver) {
 					print();
