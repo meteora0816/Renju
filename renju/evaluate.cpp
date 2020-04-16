@@ -4,18 +4,18 @@ using namespace std;
 int posValue[GRID_NUM][GRID_NUM];
 // 匹配字符串，用来判断棋型
 string pattern[39] = {
-	"aaaaa",///0:连五
-	"oaaaao",///1:活四
-	"baaaao","oaaaab",///2~3眠四
-	"aoaaab","baaaoa","aaoaa","boaaaoa","aoaaaob",///4~8低级死四
-	"oaaaoo","ooaaao",///9~10活三
-	"oaaoao","oaoaao",///11~12跳活三
-	"baaaoo","ooaaab","baaoao","oaoaab","oaaoab","baoaao","aooaa","aaooa","aoaoa","boaaaob",///13~22眠三
-	"ooaaoo","oooaao","oaaooo",///23~25活二
-	"ooaoao","oaoaoo","oaooao",///26~28低级活二
-	"aaooo","oooaa","baoaoo","ooaoab","oaooab","baooao","aoooa","boaoaob","boaaoob","booaaob"///29~38眠二
+	"aaaaa",//连五
+	"oaaaao",//活四
+	"baaaao","oaaaab",///眠四
+	"aoaaab","baaaoa","aaoaa","boaaaoa","aoaaaob",//低级死四
+	"oaaaoo","ooaaao",//活三
+	"oaaoao","oaoaao",//跳活三
+	"baaaoo","ooaaab","baaoao","oaoaab","oaaoab","baoaao","aooaa","aaooa","aoaoa","boaaaob",//眠三
+	"ooaaoo","oooaao","oaaooo",//活二
+	"ooaoao","oaoaoo","oaooao",//低级活二
+	"aaooo","oooaa","baoaoo","ooaoab","oaooab","baooao","aoooa","boaoaob","boaaoob","booaaob"//眠二
 };
-//根据不同的场景进行给分
+//给分数组
 int scores[13] = { 1000000,100000,50000,10000,5000,4000,1000,900,500,100,90,50,20 };
 
 int VALUE_BLACK = 0;
@@ -34,7 +34,7 @@ int getValue(int x, int y, int player)
 	int offsetX[4] = { 0,1,1,1 }, offsetY[4] = { 1 , 0 ,1,-1 };
 
 	//棋型判断数组
-	int patternCnt[10] = { 0,0,0,0,0,0,0,0,0,0 };
+	int patternCount[10] = { 0,0,0,0,0,0,0,0,0,0 };
 	int x1, y1;
 	int k;
 	//从四个方向考虑
@@ -93,53 +93,53 @@ int getValue(int x, int y, int player)
 		if (k < 37)
 		{
 			if (k == 0)
-				++patternCnt[0];
+				++patternCount[0];
 			else if (k == 1)
-				++patternCnt[1];
+				++patternCount[1];
 			else if (k > 1 && k < 4)
-				++patternCnt[2];
+				++patternCount[2];
 			else if (k > 3 && k < 9)
-				++patternCnt[3];
+				++patternCount[3];
 			else if (k > 8 && k < 11)
-				++patternCnt[4];
+				++patternCount[4];
 			else if (k > 10 && k < 13)
-				++patternCnt[5];
+				++patternCount[5];
 			else if (k > 12 && k < 23)
-				++patternCnt[6];
+				++patternCount[6];
 			else if (k > 22 && k < 26)
-				++patternCnt[7];
+				++patternCount[7];
 			else if (k > 25 && k < 29)
-				++patternCnt[8];
+				++patternCount[8];
 			else if (k > 28 && k < 39)
-				++patternCnt[9];
+				++patternCount[9];
 		}
 	}
 	///综合四个方向的评分
-	if (patternCnt[0] >= 1)
+	if (patternCount[0] >= 1)
 		value += scores[0];
-	else if (patternCnt[1] > 0 || patternCnt[2] + patternCnt[3] > 1 || ((patternCnt[2] + patternCnt[3]) == 1 && (patternCnt[4] + patternCnt[5]) == 1))
+	else if (patternCount[1] > 0 || patternCount[2] + patternCount[3] > 1 || ((patternCount[2] + patternCount[3]) == 1 && (patternCount[4] + patternCount[5]) == 1))
 		value += scores[1];
-	else if (patternCnt[4] + patternCnt[5] > 1)
+	else if (patternCount[4] + patternCount[5] > 1)
 		value += scores[2];
-	else if (patternCnt[4] >= 1 && patternCnt[6] >= 1)
+	else if (patternCount[4] >= 1 && patternCount[6] >= 1)
 		value += scores[3];
-	else if (patternCnt[2] >= 1)
+	else if (patternCount[2] >= 1)
 		value += scores[4];
-	else if (patternCnt[3] >= 1)
+	else if (patternCount[3] >= 1)
 		value += scores[5];
-	else if (patternCnt[4] >= 1)
+	else if (patternCount[4] >= 1)
 		value += scores[6];
-	else if (patternCnt[5] >= 1)
+	else if (patternCount[5] >= 1)
 		value += scores[7];
-	else if (patternCnt[7] + patternCnt[8] > 1)
+	else if (patternCount[7] + patternCount[8] > 1)
 		value += scores[8];
-	else if (patternCnt[7] > 0)
+	else if (patternCount[7] > 0)
 		value += scores[9];
-	else if (patternCnt[8] > 0)
+	else if (patternCount[8] > 0)
 		value += scores[10];
-	else if (patternCnt[6] > 0)
+	else if (patternCount[6] > 0)
 		value += scores[11];
-	else if (patternCnt[9] > 0)
+	else if (patternCount[9] > 0)
 		value += scores[12];
 	return value;
 }

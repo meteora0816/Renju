@@ -9,6 +9,7 @@
 #include <iostream>
 #include <algorithm>
 #include <ctime>
+#include<vector>
 using namespace std;
 
 #define blank 0		//空白点
@@ -21,6 +22,7 @@ using namespace std;
 extern int chessBoard[GRID_NUM][GRID_NUM]; //棋盘
 extern int player;
 extern int piecesCount;//棋子数
+extern vector<pair<int, int>> moveStep;//保存棋局
 
 int gameover(int x, int y, int player);//判断是否游戏结束,0是未结束，1是有player方胜利，2是和局（棋盘满了）,输入x,y为当前落子，player为落子颜色
 
