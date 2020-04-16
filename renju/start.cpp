@@ -20,7 +20,6 @@ int main()
 			player = white;
 			searchMove();
 			print();
-			
 			cout << "请落子" << endl;
 		}
 		else if (input == "newwhite") {
@@ -37,6 +36,7 @@ int main()
 					cout << "游戏结束，玩家胜利" << endl;
 					break;
 				}
+				print();
 				gameOver = searchMove();
 				print();
 				if (gameOver) {
