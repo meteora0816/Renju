@@ -3,38 +3,29 @@
 #include "makemove.h"
 #include "evaluate.h"
 #include "printchessboard.h"
-bool tooFar(int x, int y)
-{
-	for (int i = -2; i <= 2; i++) {
-		for (int j = -2; j <= 2; j++) {
-			if (i == 0 && j == 0) continue;
-			if (!inboard(x+i,y+j)) continue;
-			if (chessBoard[x + i][y + j] != 0) return false;
-		}
-	}
-	return true;
-}
-int x, y;
+
+int nx, ny;
 int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta) 
 {
-	if (dep > 2) {
+	if (dep > DEPTH) {
 		return val_ai-val_player;
 	}
+	int *moves = new int[15 * 15];
+	int *values = new int[15 * 15];
+	int len = createMoves(moves, values, color);
 	if (dep % 2) {
 		int MAX = -inf;
-		for (int i = 1; i < 16; i++) {
-			for (int j = 1; j < 16; j++) {
-				if (chessBoard[i][j] != 0) continue;
-				if (piecesCount!=0&&tooFar(i, j)) continue;
-				chessBoard[i][j] = color;
-				int eva = dfs(color ^ 3, dep + 1, val_ai + evaluate(i, j, color), val_player, alpha, beta);
-				chessBoard[i][j] = 0;
-				//if (dep == 1) printf("%d %d %d\n", i, j, eva);
+		for (int i = 0; i < len; i++) {
+			int x = (moves[i] - 1) / 15 + 1;
+			int y = (moves[i] - 1) % 15 + 1;
+				chessBoard[x][y] = color;
+				int eva = dfs(color ^ 3, dep + 1, val_ai + values[i], val_player, alpha, beta);
+				chessBoard[x][y] = 0;
 				if (eva > MAX) {
 					MAX = eva;
 					if (dep == 1) {
-						x = i;
-						y = j;
+						nx = x;
+						ny = y;
 					}
 				}
 				if (eva > alpha) {
@@ -43,24 +34,21 @@ int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta)
 				if (eva >= beta) {
 					return eva;
 				}
-			}
 		}
+		delete moves;
+		delete values;
 		return MAX;
 	}
 	else {
 		int MIN = inf;
-		for (int i = 1; i < 16; i++) {
-			for (int j = 1; j < 16; j++) {
-				if (chessBoard[i][j] != 0) continue;
-				chessBoard[i][j] = color;
-				int eva = dfs(color ^ 3, dep + 1, val_ai, val_player + evaluate(i, j, color), alpha, beta);
-				chessBoard[i][j] = 0;
+		for (int i = 0; i < len; i++) {
+			int x = (moves[i] - 1) / 15 + 1;
+			int y = (moves[i] - 1) % 15 + 1;
+				chessBoard[x][y] = color;
+				int eva = dfs(color ^ 3, dep + 1, val_ai, val_player + values[i], alpha, beta);
+				chessBoard[x][y] = 0;
 				if (eva < MIN) {
 					MIN = eva;
-					if (dep == 1) {
-						x = i;
-						y = j;
-					}
 				}
 				if (eva <= alpha) {
 					return eva;
@@ -68,8 +56,9 @@ int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta)
 				if (eva < beta) {
 					beta = eva;
 				}
-			}
 		}
+		delete moves;
+		delete values;
 		return MIN;
 	}
 }
@@ -79,9 +68,9 @@ int searchMove() //ËÑË÷º¯ÊýÖ÷Ìå
 	if (piecesCount == 0) {
 		return makeMove(8, 8, player ^ 3);
 	}
-	x = y = 0;
+	nx = ny = 0;
 	if (player==white) dfs(player ^ 3, 1, VALUE_BLACK, VALUE_WHITE, -inf, inf);
 	else dfs(player ^ 3, 1, VALUE_WHITE, VALUE_BLACK, -inf, inf);
-	//printf("%d %d\n", x, y);
-	return makeMove(x, y, player ^ 3);
+	//printf("%d %d\n", nx, ny);
+	return makeMove(nx, ny, player ^ 3);
 }
