@@ -3,6 +3,7 @@
 #include "makemove.h"
 #include "evaluate.h"
 #include "printchessboard.h"
+#include <ctime>
 
 int nx, ny;
 int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta) 
@@ -65,12 +66,14 @@ int dfs(int color, int dep, int val_ai, int val_player, int alpha, int beta)
 int searchMove() //ËÑË÷º¯ÊýÖ÷Ìå
 {
 	printf("Search starts\n");
+	int stt = clock();
 	if (piecesCount == 0) {
 		return makeMove(8, 8, player ^ 3);
 	}
 	nx = ny = 0;
 	if (player==white) dfs(player ^ 3, 1, VALUE_BLACK, VALUE_WHITE, -inf, inf);
 	else dfs(player ^ 3, 1, VALUE_WHITE, VALUE_BLACK, -inf, inf);
-	//printf("%d %d\n", nx, ny);
+	printf("time: %d\n", clock()-stt);
+	avg_time += clock() - stt;
 	return makeMove(nx, ny, player ^ 3);
 }

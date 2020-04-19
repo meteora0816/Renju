@@ -25,6 +25,7 @@ extern int chessBoard[GRID_NUM][GRID_NUM]; //棋盘
 extern int player;
 extern int piecesCount;//棋子数
 extern vector<pair<int, int>> moveStep;//保存棋局
+extern int avg_time; //平均搜索时间(ms)
 
 int gameover(int x, int y, int player);//判断是否游戏结束,0是未结束，1是有player方胜利，2是和局（棋盘满了）,输入x,y为当前落子，player为落子颜色
 

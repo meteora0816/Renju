@@ -50,6 +50,7 @@ int main()
 				if (gameOver) {
 					print();
 					cout << "游戏结束，玩家胜利" << endl;
+					cout << "avg_time: " << avg_time / (piecesCount / 2) << endl;
 					break;
 				}
 				print();
@@ -57,6 +58,7 @@ int main()
 				print();
 				if (gameOver) {
 					cout << "游戏结束，电脑胜利" << endl;
+					cout << "avg_time: " << avg_time / (piecesCount / 2 + 1) << endl;
 					break;
 				}
 				else cout << "请落子" << endl;
